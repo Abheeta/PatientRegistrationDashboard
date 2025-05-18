@@ -8,34 +8,36 @@ type Patient = {
   lastname: string;
   age: number;
   gender: string;
-  dateOfBirth: Date;
+  dateofbirth: Date;
   address: string | null;
-  medicalHistory: string | null;
+  medicalhistory: string | null;
   allergies: string | null;
   email: string | null;
-  emergencyContactName: string | null;
-  emergencyContactNumber: string | null;
-  insuranceNumber: string | null;
-  insuranceProvider: string | null;
+  emergencycontactname: string | null;
+  emergencycontactnumber: string | null;
+  insurancenumber: string | null;
+  insuranceprovider: string | null;
+  registrationdate?: Date;
 };
 
 const createPatientsTable = async (db: PGliteWithLive) => {
   await db.exec(`
     CREATE TABLE IF NOT EXISTS patients (
       id SERIAL PRIMARY KEY,
-      firstName TEXT NOT NULL,
-      lastName TEXT NOT NULL,
-      age INTEGER,
-      gender TEXT,
-      dateOfBirth TEXT,
+      firstname TEXT NOT NULL,
+      lastname TEXT NOT NULL,
+      age INTEGER NOT NULL,
+      gender VARCHAR(10) NOT NULL,
+      dateofbirth DATE NOT NULL,
       address TEXT,
-      medicalHistory TEXT,
+      medicalhistory TEXT,
       allergies TEXT,
       email TEXT,
-      emergencyContactName TEXT,
-      emergencyContactNumber TEXT,
-      insuranceNumber TEXT,
-      insuranceProvider TEXT
+      emergencycontactname TEXT,
+      emergencycontactnumber VARCHAR(15),
+      insurancenumber TEXT,
+      insuranceprovider TEXT,
+      registrationdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
 };
@@ -58,26 +60,28 @@ export const useDbActions = () => {
 
     const escape = (val: string | null) => (val ? `'${escapeText(val)}'` : 'NULL');
     const formatDate = (date: Date | null) => (date ? `'${date.toISOString()}'` : 'NULL');
+    const now = `'${new Date().toISOString()}'`;
 
     await db.query(`
       INSERT INTO patients (
-        firstName, lastName, age, gender, dateOfBirth, address, medicalHistory,
-        allergies, email, emergencyContactName, emergencyContactNumber,
-        insuranceNumber, insuranceProvider
+        firstname, lastname, age, gender, dateofbirth, address, medicalhistory,
+        allergies, email, emergencycontactname, emergencycontactnumber,
+        insurancenumber, insuranceprovider, registrationdate
       ) VALUES (
         ${escape(formData.firstname)},
         ${escape(formData.lastname)},
         ${formData.age ?? 'NULL'},
         ${escape(formData.gender)},
-        ${formatDate(formData.dateOfBirth)},
+        ${formatDate(formData.dateofbirth)},
         ${escape(formData.address)},
-        ${escape(formData.medicalHistory)},
+        ${escape(formData.medicalhistory)},
         ${escape(formData.allergies)},
         ${escape(formData.email)},
-        ${escape(formData.emergencyContactName)},
-        ${escape(formData.emergencyContactNumber)},
-        ${escape(formData.insuranceNumber)},
-        ${escape(formData.insuranceProvider)}
+        ${escape(formData.emergencycontactname)},
+        ${escape(formData.emergencycontactnumber)},
+        ${escape(formData.insurancenumber)},
+        ${escape(formData.insuranceprovider)},
+        ${now}
       );
     `);
   };

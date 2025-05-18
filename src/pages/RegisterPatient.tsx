@@ -45,15 +45,15 @@ export const RegisterPatient = () => {
         lastname: formData.lastName,
         age: parseInt(formData.age),
         gender: formData.gender,
-        dateOfBirth: new Date(formData.dateOfBirth),
+        dateofbirth: new Date(formData.dateOfBirth),
         address: formData.address || null,
-        medicalHistory: formData.medicalHistory || null,
+        medicalhistory: formData.medicalHistory || null,
         allergies: formData.allergies || null,
         email: formData.email || null,
-        emergencyContactName: formData.emergencyContactName || null,
-        emergencyContactNumber: formData.emergencyContactNumber || null,
-        insuranceNumber: formData.insuranceNumber || null,
-        insuranceProvider: formData.insuranceProvider || null,
+        emergencycontactname: formData.emergencyContactName || null,
+        emergencycontactnumber: formData.emergencyContactNumber || null,
+        insurancenumber: formData.insuranceNumber || null,
+        insuranceprovider: formData.insuranceProvider || null,
       });
 
       alert('Patient registered!');
