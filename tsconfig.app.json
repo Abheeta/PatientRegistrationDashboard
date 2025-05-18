@@ -12,7 +12,9 @@
       "@/types/*": ["types/*"],
       "@/pages/*": ["pages/*"],
       "@/utils/*": ["utils/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["hooks/*"],
+      "@/*": ["src/*"]
+
     },
 
     /* Bundler mode */
@@ -31,5 +33,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+
+
 }

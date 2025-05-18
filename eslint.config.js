@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import path from 'path';
 
 export default tseslint.config(
   {
@@ -15,12 +16,14 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
-      globals: globals.browser,
+      parser: tseslint.parser,
       parserOptions: {
         ecmaFeatures: {
-          jsx: true, // ✅ Needed to parse JSX
+          jsx: true,
         },
+      project: path.resolve('./tsconfig.eslint.json'), // 👈 important fix
       },
+      globals: globals.browser,
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -32,11 +35,14 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prettier/prettier': 'error',
     },
+    ignorePatterns: ["vite.config.ts"],
+
   },
   {
     name: 'prettier-config',
     rules: {
       ...prettierConfig.rules,
     },
-  }
+  },
+
 );

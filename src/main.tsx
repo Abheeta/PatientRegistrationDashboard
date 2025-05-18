@@ -1,12 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router';
+import { PGliteProvider } from '@electric-sql/pglite-react';
+import { db } from './dbinit';
 
-import App from './App.tsx'
+import router from './router';
 
+const rootEl = document.getElementById('root')!;
 
-createRoot(document.getElementById('root')!).render(
+createRoot(rootEl).render(
   <StrictMode>
-    <App />
+    <PGliteProvider db={db}>
+      <RouterProvider router={router} />
+    </PGliteProvider>
   </StrictMode>,
-)
+);
