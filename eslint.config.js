@@ -9,7 +9,7 @@ import path from 'path';
 
 export default tseslint.config(
   {
-    ignores: ['dist'],
+    ignores: ['dist', 'vite.config.ts'],
   },
   {
     files: ['**/*.{ts,tsx}'],
@@ -35,7 +35,7 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prettier/prettier': 'error',
     },
-    ignorePatterns: ["vite.config.ts"],
+    // ignorePatterns: ["vite.config.ts"],
 
   },
   {
