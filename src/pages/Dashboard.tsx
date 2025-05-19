@@ -193,6 +193,15 @@ export function Dashboard() {
   );
 }
 
+function getDateString(date: Date) {
+  const localDate = new Date(date); // Auto-converts to user's local timezone
+  const day = String(localDate.getDate()).padStart(2, '0');
+  const month = String(localDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = localDate.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
 function PatientAccordionItem({ patient }: { patient: Patient }) {
   const { deletePatient } = useDbActions();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -274,7 +283,7 @@ function PatientAccordionItem({ patient }: { patient: Patient }) {
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <div>
                   <p className="text-xs text-muted-foreground">Date of Birth</p>
-                  <p className="text-sm">{new Date(patient.dateofbirth).toLocaleDateString()}</p>
+                  <p className="text-sm">{getDateString(new Date(patient.dateofbirth))}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
@@ -338,7 +347,7 @@ function PatientAccordionItem({ patient }: { patient: Patient }) {
                   <p className="text-xs text-muted-foreground">Date</p>
                   <p className="text-sm">
                     {patient.registrationdate
-                      ? new Date(patient.registrationdate).toLocaleDateString()
+                      ? getDateString(new Date(patient.registrationdate))
                       : 'N/A'}
                   </p>
                 </div>

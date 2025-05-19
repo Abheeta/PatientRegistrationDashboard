@@ -173,10 +173,19 @@ export function QueryPatient() {
                             const value = row[field.name];
                             let displayValue = value;
 
+                            console.log(field.name, value, typeof value);
                             // Format date values
-                            if (field.name === 'dateofbirth' && typeof value === 'string') {
+                            if (
+                              (field.name === 'dateofbirth' || field.name === 'registrationdate') &&
+                              (typeof value === 'string' || value instanceof Date)
+                            ) {
                               try {
-                                displayValue = new Date(value).toLocaleDateString();
+                                const localDate = new Date(value); // Auto-converts to user's local timezone
+                                const day = String(localDate.getDate()).padStart(2, '0');
+                                const month = String(localDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                                const year = localDate.getFullYear();
+
+                                displayValue = `${day}-${month}-${year}`;
                               } catch (e) {
                                 displayValue = value;
                               }
