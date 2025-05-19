@@ -2,7 +2,7 @@ import { usePGlite, useLiveIncrementalQuery } from '@electric-sql/pglite-react';
 import type { PGliteWithLive } from '@electric-sql/pglite/live';
 import { useEffect, useState } from 'react';
 
-type Patient = {
+export type Patient = {
   id: number;
   firstname: string;
   lastname: string;
@@ -94,9 +94,9 @@ export const useDbActions = () => {
   const useLivePatientsQuery = (columns: string, conditions: string) => {
     const queryResults = useLiveIncrementalQuery(
       `
-         SELECT ${columns}, id as _id
-         FROM patients
-         ${conditions};
+        SELECT ${columns}, id as _id
+        FROM patients
+        ${conditions};
       `,
       [],
       '_id',

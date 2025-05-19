@@ -1,12 +1,27 @@
-// components/navbar.tsx
-import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router';
+import { useLocation } from 'react-router';
 
 export function Navbar() {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case '/':
+        return 'Dashboard';
+      case '/register':
+        return 'Register Patient';
+      case '/query':
+        return 'Query Patients';
+      default:
+        return 'Patient Management';
+    }
+  };
+
   return (
-    <Card className="bg-slate-500 rounded-none shadow-sm">
-      <CardContent className="py-2 px-6 flex items-center">
-        <span className="text-xl font-semibold">Patient Dashboard</span>
-      </CardContent>
-    </Card>
+    <nav className="w-full py-4 px-6">
+      <Link to="/" className="text-xl font-semibold">
+        {getPageTitle()}
+      </Link>
+    </nav>
   );
 }
