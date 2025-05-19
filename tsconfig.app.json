@@ -13,6 +13,7 @@
       "@/pages/*": ["pages/*"],
       "@/utils/*": ["utils/*"],
       "@/hooks/*": ["hooks/*"],
+      "@/layouts/*": ["layouts/*"],
       "@/*": ["src/*"]
 
     },
