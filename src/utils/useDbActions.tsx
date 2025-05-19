@@ -86,7 +86,12 @@ export const useDbActions = () => {
     `);
   };
 
-  function useLivePatients(columns: string, conditions: string) {
+  const deletePatient = async (id: number) => {
+    if (!isTableCreated) throw new Error('Table not created');
+    await db.query(`DELETE FROM patients WHERE id = ${id};`);
+  };
+
+  const useLivePatientsQuery = (columns: string, conditions: string) => {
     const queryResults = useLiveIncrementalQuery(
       `
          SELECT ${columns}, id as _id
@@ -101,10 +106,21 @@ export const useDbActions = () => {
       fields: queryResults.fields,
       rows: queryResults.rows,
     };
-  }
+  };
+
+  const useLivePatients = () => {
+    const result = useLiveIncrementalQuery(`SELECT * FROM patients;`, [], 'id');
+    if (!result) return null;
+    return {
+      fields: result.fields,
+      rows: result.rows as Patient[],
+    };
+  };
 
   return {
     registerPatient,
+    deletePatient,
+    useLivePatientsQuery,
     useLivePatients,
   };
 };

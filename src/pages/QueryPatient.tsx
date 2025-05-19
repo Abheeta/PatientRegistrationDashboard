@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDbActions } from '../utils/useDbActions';
 
 export const QueryPatient = () => {
-  const { useLivePatients } = useDbActions();
+  const { useLivePatientsQuery } = useDbActions();
 
   const [inputColumns, setInputColumns] = useState('*');
   const [inputConditions, setInputConditions] = useState('');
@@ -10,7 +10,7 @@ export const QueryPatient = () => {
   const [columns, setColumns] = useState('*');
   const [conditions, setConditions] = useState('');
 
-  const patients = useLivePatients(columns, conditions);
+  const patients = useLivePatientsQuery(columns, conditions);
   console.log(patients);
 
   return (
