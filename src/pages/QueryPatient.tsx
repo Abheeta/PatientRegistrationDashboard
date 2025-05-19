@@ -12,6 +12,17 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { AlertCircle, Search } from 'lucide-react';
+import { parse } from 'pgsql-ast-parser';
+
+function isValidSelectQuery(sql: string): boolean {
+  try {
+    const ast = parse(sql);
+    // Only allow SELECT queries
+    return ast.length === 1 && ast[0].type === 'select';
+  } catch (e) {
+    return false;
+  }
+}
 
 export function QueryPatient() {
   const [columnsQuery, setColumnsQuery] = useState('*');
@@ -37,6 +48,11 @@ export function QueryPatient() {
   }, [queryResults]);
 
   const executeQuery = () => {
+    if (!isValidSelectQuery(`SELECT ${columnsQuery} FROM patients ${conditionQuery}`)) {
+      setError('Invalid SQL query. Please check your syntax.');
+      return;
+    }
+
     setColumnsQuery(columnsQueryInput);
     setConditionQuery(conditionQueryInput);
     setIsExecuting(true);
